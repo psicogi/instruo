@@ -23,7 +23,7 @@ model Instrutor {
     veiculos     Veiculo[]
     pacotes      Pacote[]
     agendamentos Agendimento[]
-    // bloqueios    Bloqueio[]
+    bloqueios    Bloqueio[]
 }
 
 model BairroInstrutor {
@@ -123,4 +123,14 @@ model Agendamento {
     instrutor   Instrutor @relation(fields: [instrutorId], references: [id])
     veiculo     Veiculo   @relation(fields: [veiculoId], references: [id])
     endereco    Endereco  @relation(fields: [enderecoId], references: [id])
+}
+
+model Bloqueio {
+    id          String    @id @default(cuid())
+    instrutorId String
+    inicio      DateTime
+    fim         DateTime
+    motivo      String?
+
+    instrutor   Instrutor @relation(fields: [instrutorId], references: [id])
 }
