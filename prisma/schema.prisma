@@ -21,7 +21,7 @@ model Instrutor {
 
     bairros      BairroInstrutor[]
     veiculos     Veiculo[]
-    // pacotes      Pacote[]
+    pacotes      Pacote[]
     // agendamentos Agendimento[]
     // bloqueios    Bloqueio[]
 }
@@ -43,6 +43,20 @@ model Veiculo {
   ativo       Boolean     @default(true)
 
   instrutor     Instrutor     @relation(fields: [instrutorId], references: [id])
-  // pacotes       Pacote[]
+  pacotes       Pacote[]
   // agendamentos  Agendamento[]
+}
+
+model Pacote {
+  id            String  @id @default(cuid())
+  instrutorId   String
+  veiculoId     String
+  nome          String          // ex: "Pacote 5 aulas"
+  quantidadeAulas Int
+  valorTotal    Float
+  ativo         Boolean @default(true)
+
+  instrutor    Instrutor     @relation(fields: [instrutorId], references: [id])
+  veiculo      Veiculo       @relation(fields: [veiculoId], references: [id])
+  // compras      Compra[]
 }
