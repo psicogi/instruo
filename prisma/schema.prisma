@@ -147,3 +147,10 @@ enum CategoriaCnh {
     D
     E
 }
+
+enum StatusPagamento {
+    PENDENTE
+    PAGO
+    CANCELADO
+    REEMBOLSADO
+}
