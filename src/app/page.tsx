@@ -65,7 +65,39 @@ export default async function Home() {
             )}
           </div>
         </div>
-        
+
+        {/* Badges */}
+        <div className="flex flex-wrap gap-2 mb-4 relative z-10">
+          {instrutor.veiculos.map(v => (
+            <span key={v.id} className="inline-flex items-center gap-1 text-xs px-3 py-1 rounded-full"
+                  style={{ background: 'rgba(56,189,248,.14)', color: 'var(--azul)' }}>
+              {v.tipo === 'CARRO' ? <Car size={11} /> : <Bike size={11} />}
+              {v.tipo === 'CARRO' ? 'Carro' : 'Moto'}
+            </span>
+          ))}
+          <span className="inline-flex items-center gap-1 text-xs px-3 py-1 rounded-full"
+                style={{ background: 'rgba(251,191,36,.12)', color: '#fbbf24' }}>
+            <MapPin size={11} /> Sergipe
+          </span>
+          <span className="inline-flex items-center gap-1 text-xs px-3 py-1 rounded-full"
+                style={{ background: 'rgba(56,189,248,.14)', color: 'var(--azul)' }}>
+            🏠 Busca na porta
+          </span>
+        </div>
+
+        {/* Stats */}
+        <div className="flex gap-6 relative z-10">
+          {[
+            { valor: '5.0', label: 'Avaliação' },
+            { valor: '312', label: 'Alunos' },
+            { valor: '3 anos', label: 'Experiência' },
+          ].map(s => (
+            <div key={s.label}>
+              <div className="text-xl font-bold" style={{ color: 'var(--azul)' }}>{s.valor}</div>
+              <div className="text-xs" style={{ color: 'var(--subtexto)' }}>{s.label}</div>
+            </div>
+          ))}
+        </div>
       </section>
     </main>
   )
