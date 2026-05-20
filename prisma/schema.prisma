@@ -160,3 +160,10 @@ enum MetodoPagamento {
     CARTAO
     BOLETO
 }
+
+enum StatusAgendamento {
+    PENDENTE
+    CONFIRMADO
+    CONCLUIDO
+    CANCELADO
+}
