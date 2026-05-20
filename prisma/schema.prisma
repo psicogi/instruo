@@ -1,3 +1,12 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
 model Instrutor {
     id            String   @id @default(cuid())
     nome          String
@@ -13,7 +22,7 @@ model Instrutor {
     bairros      BairroInstrutor[]
     veiculos     Veiculo[]
     pacotes      Pacote[]
-    agendamentos Agendimento[]
+    agendamentos Agendamento[]
     bloqueios    Bloqueio[]
 }
 
