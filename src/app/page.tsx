@@ -39,6 +39,34 @@ export default async function Home() {
           Entrar
         </button>
       </nav>
+
+      {/* HERO */}
+      <section className="px-5 py-6 relative overflow-hidden"
+                style={{ background: 'var(--fundo2)' }}>
+        <div className="absolute top-0 right-0 w-64 h-64 rounded-full opacity-10 blur-3xl"
+              style={{ background: 'var(--azul)', transform: 'translate(30%,-30%)' }} />
+
+        {/* Avatar + nome */}
+        <div className="flex items-center gap-4 mb-4 relative z-10">
+          <div className="w-14 h-14 rounded-full flex items-center justify-center text-lg font-bold flex-shrink-0"
+                style={{ background: 'var(--azul)', color: 'var(--fundo)', border: '2px solid rgba(56,189,248,.3)' }}>
+            {iniciais}
+          </div>
+          <div>
+            <h1 className="text-lg font-bold text-white">{instrutor.nome}</h1>
+            <p className="text-sm" style={{ color: 'var(--subtexto)' }}>
+              Instrutor autônomo de autoescola
+            </p>
+            {instrutor.credenciado && (
+              <span className="inline-flex items-center gap-1 text-xs mt-1 px-2 py-0.5 rounded-full"
+                    style={{ background: 'rgba(56,189,248,.1)', color: 'var(--azul)' }}>
+                <ShieldCheck size={11} /> DETRAN credenciado
+              </span>
+            )}
+          </div>
+        </div>
+        
+      </section>
     </main>
   )
 }
