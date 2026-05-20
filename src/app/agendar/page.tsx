@@ -95,6 +95,49 @@ export default function AgendarTipoAula() {
                 })}
             </div>
 
+            {/* Detalhes do selecionado */}
+            {veiculo && (
+                <div className="rounded-xl px-4 py-3 mb-6"
+                    style={{ background: '#0d1f3c', border: '0.5px solid rgba(56,189,248,.15)' }}>
+                {[
+                    { label: 'Veículo',           valor: veiculo.modelo },
+                    { label: 'Categoria CNH',     valor: veiculo.categoria },
+                    { label: 'Duração da aula',   valor: veiculo.duracao },
+                    { label: 'Valor avulso',      valor: formatarMoeda(veiculo.valorAula) },
+                    { label: 'Busca e retorno',   valor: 'Incluído ✓' },
+                ].map((item, i, arr) => (
+                    <div key={item.label}>
+                    <div className="flex justify-between items-center py-2 text-sm">
+                        <span style={{ color: '#94a3b8' }}>{item.label}</span>
+                        <span className="font-medium text-white"
+                            style={item.label === 'Busca e retorno' ? { color: '#4ade80' } : {}}>
+                        {item.valor}
+                        </span>
+                    </div>
+                    {i < arr.length - 1 && (
+                        <div style={{ borderTop: '0.5px solid rgba(56,189,248,.1)' }} />
+                    )}
+                    </div>
+                ))}
+                </div>
+            )}
+
+            {/* Botão */}
+            <button
+                disabled={!selecionado}
+                onClick={() => router.push(`/agendar/pacote?tipo=${selecionado}`)}
+                className="w-full py-3 rounded-xl text-sm font-bold transition-opacity"
+                style={{
+                background: selecionado ? '#38bdf8' : '#0d1f3c',
+                color: selecionado ? '#060e1e' : '#94a3b8',
+                border: selecionado ? 'none' : '0.5px solid rgba(56,189,248,.15)',
+                opacity: selecionado ? 1 : 0.6,
+                cursor: selecionado ? 'pointer' : 'not-allowed',
+                }}>
+                {selecionado
+                ? `Continuar com aula de ${veiculos.find(v => v.id === selecionado)?.nome} →`
+                : 'Selecione um tipo de aula'}
+            </button>
         </section>
     </main>
     )
