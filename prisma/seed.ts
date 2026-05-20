@@ -54,4 +54,10 @@ async function main() {
         },
     },
     })
+
+    const veiculos = await prisma.veiculo.findMany({
+    where: { instrutorId: instrutor.id },
+    })
+    const carro = veiculos.find(v => v.tipo === 'CARRO')!
+    const moto  = veiculos.find(v => v.tipo === 'MOTO')!
 }
