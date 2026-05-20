@@ -154,3 +154,9 @@ enum StatusPagamento {
     CANCELADO
     REEMBOLSADO
 }
+
+enum MetodoPagamento {
+    PIX
+    CARTAO
+    BOLETO
+}
