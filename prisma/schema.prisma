@@ -22,7 +22,7 @@ model Instrutor {
     bairros      BairroInstrutor[]
     veiculos     Veiculo[]
     pacotes      Pacote[]
-    // agendamentos Agendimento[]
+    agendamentos Agendimento[]
     // bloqueios    Bloqueio[]
 }
 
@@ -44,7 +44,7 @@ model Veiculo {
 
     instrutor     Instrutor     @relation(fields: [instrutorId], references: [id])
     pacotes       Pacote[]
-    // agendamentos  Agendamento[]
+    agendamentos  Agendamento[]
 }
 
 model Pacote {
@@ -70,7 +70,7 @@ model Cliente {
 
     enderecos    Endereco[]
     compras      Compra[]
-    // agendamentos Agendamento[]
+    agendamentos Agendamento[]
 }
 
 model Endereco {
@@ -85,7 +85,7 @@ model Endereco {
     padrao      Boolean @default(false)
 
     cliente      Cliente       @relation(fields: [clienteId], references: [id])
-    // agendamentos Agendamento[]
+    agendamentos Agendamento[]
 }
 
 model Compra {
@@ -100,5 +100,27 @@ model Compra {
 
     cliente      Cliente       @relation(fields: [clienteId], references: [id])
     pacote       Pacote        @relation(fields: [pacoteId], references: [id])
-    // agendamentos Agendamento[]
+    agendamentos Agendamento[]
+}
+
+model Agendamento {
+    id            String   @id @default(cuid())
+    compraId      String
+    clienteId     String
+    instrutorId   String
+    veiculoId     String
+    enderecoId    String
+    numeroAula    Int               // ex: 1, 2, 3...
+    dataHora      DateTime
+    duracaoMin    Int      @default(50)
+    retornoMesmoEnd Boolean @default(true)
+    observacao    String?
+    status        StatusAgendamento @default(PENDENTE)
+    createdAt     DateTime @default(now())
+
+    compra      Compra    @relation(fields: [compraId], references: [id])
+    cliente     Cliente   @relation(fields: [clienteId], references: [id])
+    instrutor   Instrutor @relation(fields: [instrutorId], references: [id])
+    veiculo     Veiculo   @relation(fields: [veiculoId], references: [id])
+    endereco    Endereco  @relation(fields: [enderecoId], references: [id])
 }
