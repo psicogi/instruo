@@ -134,3 +134,8 @@ model Bloqueio {
 
     instrutor   Instrutor @relation(fields: [instrutorId], references: [id])
 }
+
+enum TipoVeiculo {
+    CARRO
+    MOTO
+}
