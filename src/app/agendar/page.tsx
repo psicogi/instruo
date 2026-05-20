@@ -61,6 +61,40 @@ export default function AgendarTipoAula() {
                 <span>Instrutor DETRAN credenciado. Busca e retorno na porta de casa incluso.</span>
             </div>
 
+            {/* Cards de tipo */}
+            <div className="grid grid-cols-2 gap-4 mb-6">
+                {veiculos.map(v => {
+                const Icon = v.icon
+                const ativo = selecionado === v.id
+                return (
+                    <button key={v.id}
+                            onClick={() => setSelecionado(v.id)}
+                            className="rounded-2xl p-4 text-left transition-all"
+                            style={{
+                            background: ativo ? 'rgba(14,116,144,.15)' : '#0d1f3c',
+                            border: ativo ? '1.5px solid #38bdf8' : '0.5px solid rgba(56,189,248,.15)',
+                            }}>
+                    {/* Check */}
+                    {ativo && (
+                        <div className="absolute top-3 right-3 w-5 h-5 rounded-full flex items-center justify-center"
+                            style={{ background: '#38bdf8' }}>
+                        <span style={{ color: '#060e1e', fontSize: 10, fontWeight: 700 }}>✓</span>
+                        </div>
+                    )}
+                    <Icon size={32} className="mb-3"
+                            style={{ color: ativo ? '#38bdf8' : '#94a3b8' }} />
+                    <div className="text-base font-bold text-white mb-0.5">{v.nome}</div>
+                    <div className="text-xs mb-3" style={{ color: '#94a3b8' }}>{v.categoria}</div>
+                    <div className="text-lg font-bold" style={{ color: '#38bdf8' }}>
+                        {formatarMoeda(v.valorAula)}
+                        <span className="text-xs font-normal ml-1" style={{ color: '#94a3b8' }}>/ aula</span>
+                    </div>
+                    <div className="text-xs mt-1" style={{ color: '#94a3b8' }}>{v.modelo}</div>
+                    </button>
+                )
+                })}
+            </div>
+
         </section>
     </main>
     )
