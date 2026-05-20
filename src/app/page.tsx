@@ -147,6 +147,29 @@ export default async function Home() {
           </div>
         </div>
 
+        {/* Área de atuação */}
+        <div>
+          <p className="text-xs font-medium uppercase tracking-widest mb-3"
+              style={{ color: 'var(--subtexto)' }}>Área de atuação</p>
+          <div className="grid grid-cols-2 gap-3">
+            <div className="rounded-xl p-3"
+                  style={{ background: 'var(--fundo3)', border: '0.5px solid var(--borda)' }}>
+              <MapPin size={17} className="mb-2" style={{ color: 'var(--azul)' }} />
+              <div className="text-xs mb-1" style={{ color: 'var(--subtexto)' }}>Bairros</div>
+              <div className="text-sm font-medium text-white">
+                {instrutor.bairros.map(b => b.nome).join(', ')}
+              </div>
+            </div>
+            <div className="rounded-xl p-3"
+                  style={{ background: 'var(--fundo3)', border: '0.5px solid var(--borda)' }}>
+              <MapPin size={17} className="mb-2" style={{ color: 'var(--azul)' }} />
+              <div className="text-xs mb-1" style={{ color: 'var(--subtexto)' }}>Região de atendimento</div>
+              <div className="text-sm font-medium text-white">Aracaju e região</div>
+            </div>
+          </div>
+        </div>
+
+
       </section>
     </main>
   )
