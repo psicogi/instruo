@@ -124,6 +124,29 @@ export default async function Home() {
           </div>
         </div>
 
+        {/* Veículos */}
+        <div>
+          <p className="text-xs font-medium uppercase tracking-widest mb-3"
+              style={{ color: 'var(--subtexto)' }}>Veículos</p>
+          <div className="grid grid-cols-2 gap-3">
+            {instrutor.veiculos.map(v => (
+              <div key={v.id} className="rounded-xl p-3"
+                    style={{ background: 'var(--fundo3)', border: '0.5px solid var(--borda)' }}>
+                <div className="mb-2" style={{ color: 'var(--azul)' }}>
+                  {v.tipo === 'CARRO' ? <Car size={18} /> : <Bike size={18} />}
+                </div>
+                <div className="text-xs mb-1" style={{ color: 'var(--subtexto)' }}>
+                  {v.tipo === 'CARRO' ? 'Carro' : 'Moto'}
+                </div>
+                <div className="text-sm font-medium text-white">{v.modelo}</div>
+                <div className="text-xs mt-1" style={{ color: 'var(--azul)' }}>
+                  {formatarMoeda(v.valorAula)} / aula
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
       </section>
     </main>
   )
