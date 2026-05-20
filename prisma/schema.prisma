@@ -20,9 +20,17 @@ model Instrutor {
     pixChave      String?
     createdAt     DateTime @default(now())
 
-    // bairros      BairroInstrutor[]
+    bairros      BairroInstrutor[]
     // veiculos     Veiculo[]
     // pacotes      Pacote[]
     // agendamentos Agendimento[]
     // bloqueios    Bloqueio[]
+}
+
+// ─── BAIRROS DE ATUAÇÃO ──────────────────────────────────
+model BairroInstrutor {
+    id          String    @id @default(cuid())
+    instrutorId String
+    nome        String
+    instrutor   Instrutor @relation(fields: [instrutorId], references: [id])
 }
