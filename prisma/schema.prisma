@@ -139,3 +139,11 @@ enum TipoVeiculo {
     CARRO
     MOTO
 }
+
+enum CategoriaCnh {
+    A
+    B
+    C
+    D
+    E
+}
