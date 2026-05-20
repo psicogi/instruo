@@ -7,7 +7,6 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-// ─── INSTRUTOR ───────────────────────────────────────────
 model Instrutor {
     id            String   @id @default(cuid())
     nome          String
@@ -21,16 +20,29 @@ model Instrutor {
     createdAt     DateTime @default(now())
 
     bairros      BairroInstrutor[]
-    // veiculos     Veiculo[]
+    veiculos     Veiculo[]
     // pacotes      Pacote[]
     // agendamentos Agendimento[]
     // bloqueios    Bloqueio[]
 }
 
-// ─── BAIRROS DE ATUAÇÃO ──────────────────────────────────
 model BairroInstrutor {
     id          String    @id @default(cuid())
     instrutorId String
     nome        String
     instrutor   Instrutor @relation(fields: [instrutorId], references: [id])
+}
+
+model Veiculo {
+  id          String      @id @default(cuid())
+  instrutorId String
+  tipo        TipoVeiculo
+  modelo      String
+  categoriaCnh CategoriaCnh
+  valorAula   Float
+  ativo       Boolean     @default(true)
+
+  instrutor     Instrutor     @relation(fields: [instrutorId], references: [id])
+  // pacotes       Pacote[]
+  // agendamentos  Agendamento[]
 }
