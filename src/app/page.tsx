@@ -169,6 +169,38 @@ export default async function Home() {
           </div>
         </div>
 
+        {/* Avaliações */}
+        <div>
+          <p className="text-xs font-medium uppercase tracking-widest mb-3"
+              style={{ color: 'var(--subtexto)' }}>Avaliações</p>
+          {[
+            { nome: 'Giovana Dantas',  texto: 'Ótimo instrutor, muito paciente. Me buscou em casa e passei na primeira!', tempo: 'há 3 dias' },
+            { nome: 'Ana Martins',  texto: 'Fiz o pacote de moto, valeu demais. Pontual e profissional.', tempo: 'há 1 semana' },
+          ].map(r => (
+            <div key={r.nome} className="rounded-xl p-3 mb-3"
+                  style={{ background: 'var(--fundo3)', border: '0.5px solid var(--borda)' }}>
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0"
+                      style={{ background: 'var(--azul)', color: 'var(--fundo)' }}>
+                  {r.nome.split(' ').map(n=>n[0]).join('')}
+                </div>
+                <div>
+                  <div className="text-sm font-medium text-white">{r.nome}</div>
+                  <div className="text-yellow-400 text-xs">★★★★★</div>
+                </div>
+                <span className="ml-auto text-xs" style={{ color: 'var(--subtexto)' }}>{r.tempo}</span>
+              </div>
+              <p className="text-sm" style={{ color: 'var(--subtexto)' }}>{r.texto}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Botão */}
+        <Link href="/agendar"
+              className="block w-full text-center py-3 rounded-xl text-sm font-bold"
+              style={{ background: 'var(--azul)', color: 'var(--fundo)' }}>
+          Agendar aula →
+        </Link>
 
       </section>
     </main>
