@@ -99,6 +99,32 @@ export default async function Home() {
           ))}
         </div>
       </section>
+
+      {/* CONTEÚDO */}
+      <section className="px-5 py-5 space-y-6">
+
+        {/* CNH */}
+        <div>
+          <p className="text-xs font-medium uppercase tracking-widest mb-3"
+              style={{ color: 'var(--subtexto)' }}>Categorias CNH</p>
+          <div className="flex gap-2">
+            {(['A','B','C','D','E'] as const).map(cat => {
+              const ativa = instrutor.veiculos.some(v => v.categoriaCnh === cat)
+              return (
+                <div key={cat}
+                      className="w-9 h-9 rounded-lg flex items-center justify-center text-sm font-bold"
+                      style={ativa
+                        ? { background: 'var(--azul)', color: 'var(--fundo)' }
+                        : { background: 'var(--fundo3)', color: 'var(--subtexto)',
+                            border: '0.5px solid var(--borda)' }}>
+                  {cat}
+                </div>
+              )
+            })}
+          </div>
+        </div>
+
+      </section>
     </main>
   )
 }
