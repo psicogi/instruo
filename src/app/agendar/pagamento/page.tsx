@@ -137,6 +137,25 @@ const pagar = async () => {
             Confira os detalhes antes de confirmar.
             </p>
 
+            {/* Dados do cliente */}
+            <div className="rounded-2xl p-4 mb-5 space-y-3"
+                style={{ background: '#0d1f3c', border: '0.5px solid rgba(56,189,248,.15)' }}>
+                <p className="text-xs font-medium uppercase tracking-widest"
+                    style={{ color: '#94a3b8' }}>Seus dados</p>
+                <input value={nome} onChange={e => setNome(e.target.value)}
+                        placeholder="Nome completo *"
+                        className="w-full px-3 py-2 rounded-xl text-sm text-white outline-none"
+                        style={{ background: '#060e1e', border: `0.5px solid ${nome ? '#38bdf8' : 'rgba(56,189,248,.2)'}` }} />
+                <input value={email} onChange={e => setEmail(e.target.value)}
+                        placeholder="E-mail *" type="email"
+                        className="w-full px-3 py-2 rounded-xl text-sm text-white outline-none"
+                        style={{ background: '#060e1e', border: `0.5px solid ${email ? '#38bdf8' : 'rgba(56,189,248,.2)'}` }} />
+                <input value={telefone} onChange={e => setTelefone(e.target.value)}
+                        placeholder="WhatsApp (opcional)"
+                        className="w-full px-3 py-2 rounded-xl text-sm text-white outline-none"
+                        style={{ background: '#060e1e', border: '0.5px solid rgba(56,189,248,.2)' }} />
+            </div>
+
             {/* Resumo */}
             <div className="rounded-2xl p-4 mb-5"
                 style={{ background: '#0d1f3c', border: '0.5px solid rgba(56,189,248,.15)' }}>
