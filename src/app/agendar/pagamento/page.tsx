@@ -123,6 +123,30 @@ function PagamentoContent() {
                     </div>
                 </div>
             </div>
+
+            {/* Método de pagamento */}
+            <p className="text-xs font-medium uppercase tracking-widest mb-3"
+            style={{ color: '#94a3b8' }}>Forma de pagamento</p>
+
+            <div className="grid grid-cols-3 gap-3 mb-4">
+                {metodos.map(m => {
+                    const Icon = m.icon
+                    const ativo = metodo === m.id
+                    return (
+                    <button key={m.id}
+                            onClick={() => setMetodo(m.id)}
+                            className="py-3 rounded-xl flex flex-col items-center gap-1 text-xs font-medium transition-all"
+                            style={{
+                                background: ativo ? 'rgba(14,116,144,.15)' : '#0d1f3c',
+                                border: ativo ? '1.5px solid #38bdf8' : '0.5px solid rgba(56,189,248,.15)',
+                                color: ativo ? '#38bdf8' : '#94a3b8',
+                            }}>
+                        <Icon size={20} />
+                        {m.label}
+                    </button>
+                    )
+                })}
+            </div>
         </section>
     </main>
     )
