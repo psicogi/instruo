@@ -142,6 +142,44 @@ function HorarioContent() {
             })}
             </div>
         </div>
+
+        {/* HORÁRIOS */}
+        {diaSel && (
+            <div className="mb-6">
+            <p className="text-xs font-medium uppercase tracking-widest mb-3"
+                style={{ color: '#94a3b8' }}>
+                Horários — {dataFormatada}
+            </p>
+            <div className="grid grid-cols-4 gap-2 mb-3">
+                {HORARIOS.map(h => {
+                const ocupado = horariosOcupados.includes(h)
+                const sel     = horaSel === h
+                return (
+                    <button key={h}
+                            disabled={ocupado}
+                            onClick={() => setHoraSel(h)}
+                            className="py-2 rounded-xl text-xs font-medium transition-all"
+                            style={{
+                            background: sel     ? '#0e7490'
+                                        : ocupado ? 'transparent'
+                                        : '#0d1f3c',
+                            color:      sel     ? '#fff'
+                                        : ocupado ? '#334155'
+                                        : '#e2e8f0',
+                            border:     sel     ? '1px solid #38bdf8'
+                                        : ocupado ? '0.5px solid #1e3a5f'
+                                        : '0.5px solid rgba(56,189,248,.15)',
+                            cursor:     ocupado ? 'not-allowed' : 'pointer',
+                            textDecoration: ocupado ? 'line-through' : 'none',
+                            opacity: ocupado ? 0.4 : 1,
+                            }}>
+                    {h}
+                    </button>
+                )
+                })}
+            </div>
+            </div>
+        )}
         </section>
     </main>
     )
