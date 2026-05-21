@@ -98,6 +98,30 @@ function PagamentoContent() {
                         {i < arr.length - 1 && <div style={{ borderTop: '0.5px solid rgba(56,189,248,.08)' }} />}
                     </div>
                 ))}
+
+                <div style={{ borderTop: '0.5px solid rgba(56,189,248,.15)', marginTop: 4 }} />
+
+                {/* Valores */}
+                <div className="pt-2 space-y-1">
+                    {eco > 0 && (
+                    <>
+                        <div className="flex justify-between text-sm">
+                            <span style={{ color: '#94a3b8' }}>{pk.qtd} aulas (valor cheio)</span>
+                            <span className="text-white">{formatarMoeda(base)}</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                            <span style={{ color: '#4ade80' }}>Desconto do pacote</span>
+                            <span style={{ color: '#4ade80' }}>– {formatarMoeda(eco)}</span>
+                        </div>
+                    </>
+                    )}
+                    <div className="flex justify-between items-center pt-1">
+                        <span className="text-sm font-medium text-white">Total</span>
+                        <span className="text-xl font-bold" style={{ color: '#38bdf8' }}>
+                            {formatarMoeda(total)}
+                        </span>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
