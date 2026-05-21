@@ -34,26 +34,83 @@ function PagamentoContent() {
     const bairro  = params.get('bairro')  ?? ''
     const cidade  = params.get('cidade')  ?? ''
 
-    const [metodo, setMetodo] = useState<MetodoPag>('pix')
-    const [loading, setLoading] = useState(false)
+const [metodo, setMetodo]     = useState<MetodoPag>('pix')
+const [loading, setLoading]   = useState(false)
+const [nome, setNome]         = useState('')
+const [email, setEmail]       = useState('')
+const [telefone, setTelefone] = useState('')
 
-    const pk    = PACOTES[pacote] ?? PACOTES['1']
-    const total = tipo === 'carro' ? pk.totalCarro : pk.totalMoto
-    const eco   = tipo === 'carro' ? ECONOMIA[pacote].carro : ECONOMIA[pacote].moto
-    const base  = total + eco
+const pk    = PACOTES[pacote] ?? PACOTES['1']
+const total = tipo === 'carro' ? pk.totalCarro : pk.totalMoto
+const eco   = tipo === 'carro' ? ECONOMIA[pacote].carro : ECONOMIA[pacote].moto
+const base  = total + eco
 
-    const dataAula = dia
+const dataAula = dia
     ? new Date(Number(ano), Number(mes), Number(dia))
         .toLocaleDateString('pt-BR', { weekday:'short', day:'numeric', month:'short' })
     : ''
 
-    const endFormatado = [rua, numero, bairro, cidade].filter(Boolean).join(', ')
+const endFormatado = [rua, numero, bairro, cidade].filter(Boolean).join(', ')
 
-    const pagar = async () => {
-    setLoading(true)
-    await new Promise(r => setTimeout(r, 1800))
-    router.push(`/agendar/confirmacao?tipo=${tipo}&pacote=${pacote}&dia=${dia}&mes=${mes}&ano=${ano}&hora=${hora}`)
+const pagar = async () => {
+    if (!nome || !email) {
+        alert('Preencha seu nome e e-mail para continuar.')
+        return
     }
+    setLoading(true)
+    try {
+        const resCliente = await fetch('/api/clientes', {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify({ nome, email, telefone }),
+        })
+        const cliente = await resCliente.json()
+
+        const resInstrutor = await fetch('/api/instrutor')
+        const instrutor    = await resInstrutor.json()
+        const veiculo      = instrutor.veiculos.find(
+            (v: { tipo: string }) => v.tipo === (tipo === 'carro' ? 'CARRO' : 'MOTO')
+        )
+        const pacoteDB = instrutor.pacotes.find(
+            (p: { veiculoId: string; quantidadeAulas: number }) =>
+            p.veiculoId === veiculo?.id && p.quantidadeAulas === pk.qtd
+        )
+
+        const dataHora = new Date(
+            Number(ano), Number(mes), Number(dia),
+            Number(hora.split(':')[0]), Number(hora.split(':')[1])
+        ).toISOString()
+
+        await fetch('/api/agendamentos', {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify({
+                clienteId:   cliente.id,
+                pacoteId:    pacoteDB?.id,
+                veiculoId:   veiculo?.id,
+                instrutorId: instrutor.id,
+                dataHora,
+                rua:         params.get('rua')          ?? '',
+                numero:      params.get('numero')        ?? '',
+                complemento: params.get('complemento')   ?? '',
+                bairro:      params.get('bairro')        ?? '',
+                cidade:      params.get('cidade')        ?? '',
+                cep:         params.get('cep')           ?? '',
+                retorno:     params.get('retorno') === 'true',
+                observacao:  params.get('obs')           ?? '',
+            }),
+    })
+
+    router.push(
+        `/agendar/confirmacao?tipo=${tipo}&pacote=${pacote}&dia=${dia}&mes=${mes}&ano=${ano}&hora=${hora}`
+    )
+    } catch (err) {
+    console.error(err)
+    alert('Erro ao processar. Tente novamente.')
+    } finally {
+        setLoading(false)
+    }
+}
 
     const metodos: { id: MetodoPag; label: string; icon: typeof QrCode }[] = [
     { id: 'pix',    label: 'PIX',    icon: QrCode     },
