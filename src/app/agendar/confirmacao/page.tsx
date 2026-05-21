@@ -108,6 +108,28 @@ function ConfirmacaoContent() {
                     </p>
                 </div>
             )}
+
+            {/* Botões */}
+            <div className="w-full space-y-3">
+                {pk.qtd > 1 && (
+                    <button
+                        onClick={() => router.push('/minhas-aulas')}
+                        className="w-full py-3 rounded-xl text-sm font-bold"
+                        style={{ background: '#38bdf8', color: '#060e1e' }}>
+                        Agendar próximas aulas →
+                    </button>
+                )}
+                <button
+                onClick={() => router.push('/')}
+                className="w-full py-3 rounded-xl text-sm font-medium"
+                style={{
+                    background: '#0d1f3c',
+                    color: '#94a3b8',
+                    border: '0.5px solid rgba(56,189,248,.15)',
+                }}>
+                Voltar ao perfil
+                </button>
+            </div>
         </section>
     </main>
     )
