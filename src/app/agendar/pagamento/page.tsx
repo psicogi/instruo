@@ -182,6 +182,27 @@ function PagamentoContent() {
                 </div>
             </div>
             )}
+
+            {/* Cartão */}
+            {metodo === 'cartao' && (
+                <div className="rounded-2xl p-4 mb-5 space-y-3"
+                    style={{ background: '#0d1f3c', border: '0.5px solid rgba(56,189,248,.15)' }}>
+                    <input placeholder="Número do cartão"
+                        className="w-full px-3 py-2 rounded-xl text-sm text-white outline-none"
+                        style={{ background: '#060e1e', border: '0.5px solid rgba(56,189,248,.2)' }} />
+                    <input placeholder="Nome no cartão"
+                        className="w-full px-3 py-2 rounded-xl text-sm text-white outline-none"
+                        style={{ background: '#060e1e', border: '0.5px solid rgba(56,189,248,.2)' }} />
+                    <div className="grid grid-cols-2 gap-3">
+                        <input placeholder="MM/AA"
+                                className="w-full px-3 py-2 rounded-xl text-sm text-white outline-none"
+                                style={{ background: '#060e1e', border: '0.5px solid rgba(56,189,248,.2)' }} />
+                        <input placeholder="CVV"
+                                className="w-full px-3 py-2 rounded-xl text-sm text-white outline-none"
+                                style={{ background: '#060e1e', border: '0.5px solid rgba(56,189,248,.2)' }} />
+                    </div>
+                </div>
+            )}
         </section>
     </main>
     )
