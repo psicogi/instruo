@@ -23,3 +23,29 @@ const descricoes: Record<string, string> = {
     '5':  'O pacote mais escolhido. 5 aulas no seu ritmo com desconto progressivo.',
     '10': 'Melhor custo-benefício! Ideal para quem está começando do zero.',
 }
+
+function PacotesContent() {
+    const router = useRouter()
+    const params = useSearchParams()
+    const tipo = (params.get('tipo') ?? 'carro') as 'carro' | 'moto'
+    const [selecionado, setSelecionado] = useState<string | null>(null)
+
+    const pacotes = pacotesPorTipo[tipo] ?? pacotesPorTipo.carro
+    const pacote  = pacotes.find(p => p.id === selecionado)
+
+    return (
+    <main className="max-w-lg mx-auto min-h-screen">
+
+      {/* NAV */}
+        <nav className="flex items-center gap-3 px-5 py-4"
+            style={{ background: '#0a1628', borderBottom: '0.5px solid rgba(56,189,248,.15)' }}>
+        <button onClick={() => router.back()} className="hover:opacity-70">
+            <ChevronLeft size={20} style={{ color: '#38bdf8' }} />
+        </button>
+        <span className="text-xl font-bold" style={{ color: '#38bdf8' }}>instruo</span>
+        <span className="text-sm ml-auto" style={{ color: '#94a3b8' }}>Passo 2 de 5</span>
+        </nav>
+        
+    </main>
+    )
+}
