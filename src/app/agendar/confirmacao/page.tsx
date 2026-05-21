@@ -95,6 +95,19 @@ function ConfirmacaoContent() {
                     )
                 })}
             </div>
+
+            {/* Próximas aulas */}
+            {pk.qtd > 1 && (
+                <div className="w-full rounded-2xl p-4 mb-6"
+                    style={{ background: 'rgba(56,189,248,.07)', border: '0.5px solid rgba(56,189,248,.2)' }}>
+                    <p className="text-sm font-medium mb-1" style={{ color: '#38bdf8' }}>
+                        📅 Aula 2 a {pk.qtd} — a agendar por você
+                    </p>
+                    <p className="text-xs" style={{ color: '#64748b' }}>
+                        Acesse "Minhas aulas" para agendar as próximas no horário que preferir.
+                    </p>
+                </div>
+            )}
         </section>
     </main>
     )
