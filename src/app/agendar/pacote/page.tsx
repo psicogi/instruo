@@ -115,7 +115,40 @@ function PacotesContent() {
             })}
         </div>
 
+        {/* Descrição do pacote selecionado */}
+        {pacote && (
+            <div className="rounded-xl px-4 py-3 mb-6"
+                style={{ background: '#0d1f3c', border: '0.5px solid rgba(56,189,248,.15)' }}>
+                <div className="text-sm font-medium text-white mb-1">{pacote.label}</div>
+                <div className="text-sm" style={{ color: '#94a3b8' }}>{descricoes[pacote.id]}</div>
+            </div>
+        )}
+
+        {/* Botão */}
+        <button
+            disabled={!selecionado}
+            onClick={() => router.push(`/agendar/horario?tipo=${tipo}&pacote=${selecionado}`)}
+            className="w-full py-3 rounded-xl text-sm font-bold transition-all"
+            style={{
+            background: selecionado ? '#38bdf8' : '#0d1f3c',
+            color: selecionado ? '#060e1e' : '#94a3b8',
+            border: selecionado ? 'none' : '0.5px solid rgba(56,189,248,.15)',
+            opacity: selecionado ? 1 : 0.6,
+            cursor: selecionado ? 'pointer' : 'not-allowed',
+            }}>
+            {pacote
+            ? `Continuar com ${pacote.label} →`
+            : 'Selecione um pacote'}
+        </button>
         </section>
     </main>
+    )
+}
+
+export default function AgendarPacote() {
+    return (
+    <Suspense>
+        <PacotesContent />
+    </Suspense>
     )
 }
