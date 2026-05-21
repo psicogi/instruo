@@ -51,58 +51,104 @@ function EnderecoContent() {
         </nav>
 
         <section className="px-5 py-6">
-        <h2 className="text-xl font-bold text-white mb-1">Endereço de embarque</h2>
-        <p className="text-sm mb-5" style={{ color: '#94a3b8' }}>
-            O instrutor vai buscar você neste endereço.
-        </p>
+            <h2 className="text-xl font-bold text-white mb-1">Endereço de embarque</h2>
+            <p className="text-sm mb-5" style={{ color: '#94a3b8' }}>
+                O instrutor vai buscar você neste endereço.
+            </p>
 
-        {/* Aviso */}
-        <div className="flex items-start gap-2 rounded-xl px-4 py-3 mb-5 text-sm"
-                style={{ background: 'rgba(56,189,248,.07)', border: '0.5px solid rgba(56,189,248,.2)', color: '#38bdf8' }}>
-            <Car size={15} className="mt-0.5 flex-shrink-0" />
-            <span>O instrutor confirmará se o endereço está na área de atendimento antes de aceitar o agendamento.</span>
-        </div>
+            {/* Aviso */}
+            <div className="flex items-start gap-2 rounded-xl px-4 py-3 mb-5 text-sm"
+                    style={{ background: 'rgba(56,189,248,.07)', border: '0.5px solid rgba(56,189,248,.2)', color: '#38bdf8' }}>
+                <Car size={15} className="mt-0.5 flex-shrink-0" />
+                <span>O instrutor confirmará se o endereço está na área de atendimento antes de aceitar o agendamento.</span>
+            </div>
 
-        {/* Formulário */}
-            <div className="rounded-2xl p-4 mb-4 space-y-3"
-                style={{ background: '#0d1f3c', border: '0.5px solid rgba(56,189,248,.15)' }}>
+            {/* Formulário */}
+                <div className="rounded-2xl p-4 mb-4 space-y-3"
+                    style={{ background: '#0d1f3c', border: '0.5px solid rgba(56,189,248,.15)' }}>
 
-            {/* CEP */}
-                <div>
-                    <label className="block text-xs font-medium uppercase tracking-wider mb-1.5"
-                            style={{ color: '#94a3b8' }}>CEP</label>
-                        <input value={form.cep}
-                            onChange={e => set('cep', formatarCep(e.target.value))}
-                            placeholder="00000-000"
-                            maxLength={9}
-                            className="w-full px-3 py-2 rounded-xl text-sm text-white outline-none transition-all"
-                            style={{ background: '#060e1e', border: `0.5px solid ${form.cep ? '#38bdf8' : 'rgba(56,189,248,.2)'}` }} />
-                </div>
-
-            {/* Rua */}
-                <div>
-                    <label className="block text-xs font-medium uppercase tracking-wider mb-1.5"
-                            style={{ color: '#94a3b8' }}>Rua / Avenida</label>
-                        <input value={form.rua}
-                            onChange={e => set('rua', e.target.value)}
-                            placeholder="Ex: Av. Beira Mar"
-                            className="w-full px-3 py-2 rounded-xl text-sm text-white outline-none transition-all"
-                            style={{ background: '#060e1e', border: `0.5px solid ${form.rua ? '#38bdf8' : 'rgba(56,189,248,.2)'}` }} />
-                </div>
-
-            {/* Número e Complemento */}
-                <div className="grid grid-cols-2 gap-3">
+                {/* CEP */}
                     <div>
                         <label className="block text-xs font-medium uppercase tracking-wider mb-1.5"
-                                style={{ color: '#94a3b8' }}>Número</label>
-                        <input value={form.numero}
-                                onChange={e => set('numero', e.target.value)}
-                                placeholder="Ex: 1200"
-                                className="w-full px-3 py-2 rounded-xl text-sm text-white outline-none"
-                                style={{ background: '#060e1e', border: `0.5px solid ${form.numero ? '#38bdf8' : 'rgba(56,189,248,.2)'}` }} />
+                                style={{ color: '#94a3b8' }}>CEP</label>
+                            <input value={form.cep}
+                                onChange={e => set('cep', formatarCep(e.target.value))}
+                                placeholder="00000-000"
+                                maxLength={9}
+                                className="w-full px-3 py-2 rounded-xl text-sm text-white outline-none transition-all"
+                                style={{ background: '#060e1e', border: `0.5px solid ${form.cep ? '#38bdf8' : 'rgba(56,189,248,.2)'}` }} />
                     </div>
+
+                {/* Rua */}
+                    <div>
+                        <label className="block text-xs font-medium uppercase tracking-wider mb-1.5"
+                                style={{ color: '#94a3b8' }}>Rua / Avenida</label>
+                            <input value={form.rua}
+                                onChange={e => set('rua', e.target.value)}
+                                placeholder="Ex: Av. Beira Mar"
+                                className="w-full px-3 py-2 rounded-xl text-sm text-white outline-none transition-all"
+                                style={{ background: '#060e1e', border: `0.5px solid ${form.rua ? '#38bdf8' : 'rgba(56,189,248,.2)'}` }} />
+                    </div>
+
+                {/* Número e Complemento */}
+                    <div className="grid grid-cols-2 gap-3">
+                        <div>
+                            <label className="block text-xs font-medium uppercase tracking-wider mb-1.5"
+                                    style={{ color: '#94a3b8' }}>Número</label>
+                            <input value={form.numero}
+                                    onChange={e => set('numero', e.target.value)}
+                                    placeholder="Ex: 1200"
+                                    className="w-full px-3 py-2 rounded-xl text-sm text-white outline-none"
+                                    style={{ background: '#060e1e', border: `0.5px solid ${form.numero ? '#38bdf8' : 'rgba(56,189,248,.2)'}` }} />
+                        </div>
+                        <div>
+                            <label className="block text-xs font-medium uppercase tracking-wider mb-1.5"
+                                    style={{ color: '#94a3b8' }}>Complemento</label>
+                            <input value={form.complemento}
+                                    onChange={e => set('complemento', e.target.value)}
+                                    placeholder="Apto, bloco..."
+                                    className="w-full px-3 py-2 rounded-xl text-sm text-white outline-none"
+                                    style={{ background: '#060e1e', border: '0.5px solid rgba(56,189,248,.2)' }} />
+                        </div>
+                    </div>
+
+                {/* Bairro e Cidade */}
+                    <div className="grid grid-cols-2 gap-3">
+                        <div>
+                            <label className="block text-xs font-medium uppercase tracking-wider mb-1.5"
+                                    style={{ color: '#94a3b8' }}>Bairro</label>
+                            <input value={form.bairro}
+                                    onChange={e => set('bairro', e.target.value)}
+                                    placeholder="Ex: Jardins"
+                                    className="w-full px-3 py-2 rounded-xl text-sm text-white outline-none"
+                                    style={{ background: '#060e1e', border: `0.5px solid ${form.bairro ? '#38bdf8' : 'rgba(56,189,248,.2)'}` }} />
+                        </div>
+                        <div>
+                            <label className="block text-xs font-medium uppercase tracking-wider mb-1.5"
+                                    style={{ color: '#94a3b8' }}>Cidade</label>
+                            <input value={form.cidade}
+                                    onChange={e => set('cidade', e.target.value)}
+                                    className="w-full px-3 py-2 rounded-xl text-sm text-white outline-none"
+                                    style={{ background: '#060e1e', border: '0.5px solid rgba(56,189,248,.2)' }} />
+                        </div>
+                    </div>
+
+            {/* Divider */}
+                <div style={{ borderTop: '0.5px solid rgba(56,189,248,.1)' }} />
+
+                {/* Toggle retorno */}
+                    <button onClick={() => setRetorno(r => !r)}
+                            className="flex items-center gap-3 w-full py-1">
+                    <div className="relative w-9 h-5 rounded-full flex-shrink-0 transition-colors"
+                            style={{ background: retorno ? '#38bdf8' : '#1e3a5f' }}>
+                        <div className="absolute top-0.5 w-4 h-4 rounded-full bg-white transition-all"
+                            style={{ left: retorno ? '18px' : '2px' }} />
+                    </div>
+                    <span className="text-sm text-left" style={{ color: '#e2e8f0' }}>
+                        Retornar ao mesmo endereço após a aula
+                    </span>
+                    </button>
                 </div>
-            </div>
         </section>
     </main>
     )
