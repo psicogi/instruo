@@ -212,6 +212,30 @@ function PagamentoContent() {
                     O prazo de compensação é de até 3 dias úteis.
                 </div>
             )}
+
+            {/* Botão pagar */}
+            <button
+                onClick={pagar}
+                disabled={loading}
+                className="w-full py-3.5 rounded-xl text-sm font-bold transition-all flex items-center justify-center gap-2"
+                style={{
+                background: loading ? '#0d1f3c' : '#38bdf8',
+                color:      loading ? '#94a3b8' : '#060e1e',
+                cursor:     loading ? 'not-allowed' : 'pointer',
+                }}>
+                {loading ? (
+                <>
+                    <div className="w-4 h-4 rounded-full border-2 border-t-transparent animate-spin"
+                        style={{ borderColor: '#38bdf8', borderTopColor: 'transparent' }} />
+                    Processando...
+                </>
+                ) : (
+                <>
+                    <Check size={16} />
+                    Confirmar pagamento — {formatarMoeda(total)}
+                </>
+                )}
+            </button>
         </section>
     </main>
     )
