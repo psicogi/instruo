@@ -74,6 +74,75 @@ function HorarioContent() {
             <span className="text-sm ml-auto" style={{ color: '#94a3b8' }}>Passo 3 de 5</span>
         </nav>
 
+        <section className="px-5 py-6">
+        <h2 className="text-xl font-bold text-white mb-1">Escolha o horário</h2>
+        <p className="text-sm mb-6" style={{ color: '#94a3b8' }}>
+            Data e hora da 1ª aula. As demais você agenda depois.
+        </p>
+
+        {/* CALENDÁRIO */}
+        <div className="rounded-2xl p-4 mb-5"
+                style={{ background: '#0d1f3c', border: '0.5px solid rgba(56,189,248,.15)' }}>
+
+          {/* Cabeçalho mês */}
+            <div className="flex items-center justify-between mb-4">
+            <button onClick={irMesAnterior} className="hover:opacity-70 px-2 py-1 rounded-lg"
+                    style={{ color: '#94a3b8' }}>‹</button>
+            <span className="text-sm font-bold text-white">
+                {MESES[mes]} {ano}
+            </span>
+            <button onClick={irProximoMes} className="hover:opacity-70 px-2 py-1 rounded-lg"
+                    style={{ color: '#94a3b8' }}>›</button>
+            </div>
+
+          {/* Dias da semana */}
+            <div className="grid grid-cols-7 mb-2">
+            {DIAS_SEMANA.map((d, i) => (
+                <div key={i} className="text-center text-xs py-1"
+                    style={{ color: '#94a3b8' }}>{d}</div>
+            ))}
+            </div>
+
+          {/* Dias */}
+            <div className="grid grid-cols-7 gap-1">
+            {/* Espaços vazios antes do dia 1 */}
+            {Array.from({ length: primeiroDia }).map((_, i) => (
+                <div key={`e-${i}`} />
+            ))}
+
+            {Array.from({ length: totalDias }).map((_, i) => {
+                const dia = i + 1
+                const passado  = isPassed(dia)
+                const bloqueado = isBloq(dia)
+                const hoje2    = isHoje(dia)
+                const sel      = diaSel === dia
+                const disabled = passado || bloqueado
+
+                return (
+                <button key={dia}
+                        disabled={disabled}
+                        onClick={() => { setDiaSel(dia); setHoraSel(null) }}
+                        className="aspect-square flex items-center justify-center text-xs rounded-lg transition-all"
+                        style={{
+                            background: sel    ? '#0e7490'
+                                    : hoje2  ? '#38bdf8'
+                                    : 'transparent',
+                            color:      sel    ? '#fff'
+                                    : hoje2  ? '#060e1e'
+                                    : disabled ? '#334155'
+                                    : '#e2e8f0',
+                            border:     sel    ? '1px solid #38bdf8'
+                                    : 'none',
+                            cursor:     disabled ? 'not-allowed' : 'pointer',
+                            fontWeight: (sel || hoje2) ? 700 : 400,
+                        }}>
+                    {dia}
+                </button>
+                )
+            })}
+            </div>
+        </div>
+        </section>
     </main>
     )
 }
