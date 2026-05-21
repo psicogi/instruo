@@ -66,3 +66,11 @@ function EnderecoContent() {
     </main>
     )
 }
+
+export default function AgendarEndereco() {
+    return (
+    <Suspense>
+        <EnderecoContent />
+    </Suspense>
+    )
+}
