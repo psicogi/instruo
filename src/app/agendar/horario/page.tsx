@@ -178,9 +178,55 @@ function HorarioContent() {
                 )
                 })}
             </div>
+
+            {/* Legenda */}
+            <div className="flex gap-4 text-xs" style={{ color: '#64748b' }}>
+                <span className="flex items-center gap-1.5">
+                <span className="w-3 h-3 rounded inline-block"
+                        style={{ background: '#0e7490', border: '1px solid #38bdf8' }} />
+                Selecionado
+                </span>
+                <span className="flex items-center gap-1.5">
+                <span className="w-3 h-3 rounded inline-block opacity-40"
+                        style={{ border: '0.5px solid #1e3a5f' }} />
+                Ocupado
+                </span>
+                <span className="flex items-center gap-1.5">
+                <span className="w-3 h-3 rounded inline-block"
+                        style={{ background: '#0d1f3c', border: '0.5px solid rgba(56,189,248,.15)' }} />
+                Disponível
+                </span>
+            </div>
             </div>
         )}
+
+        {/* Botão */}
+        <button
+            disabled={!diaSel || !horaSel}
+            onClick={() => router.push(
+            `/agendar/endereco?tipo=${tipo}&pacote=${pacote}&dia=${diaSel}&mes=${mes}&ano=${ano}&hora=${horaSel}`
+            )}
+            className="w-full py-3 rounded-xl text-sm font-bold transition-all"
+            style={{
+            background: (diaSel && horaSel) ? '#38bdf8' : '#0d1f3c',
+            color:      (diaSel && horaSel) ? '#060e1e' : '#94a3b8',
+            border:     (diaSel && horaSel) ? 'none' : '0.5px solid rgba(56,189,248,.15)',
+            opacity:    (diaSel && horaSel) ? 1 : 0.6,
+            cursor:     (diaSel && horaSel) ? 'pointer' : 'not-allowed',
+            }}>
+            {diaSel && horaSel
+            ? `Confirmar — ${dataFormatada} às ${horaSel} →`
+            : !diaSel ? 'Selecione uma data' : 'Selecione um horário'}
+        </button>
         </section>
     </main>
+    )
+}
+
+export default function AgendarHorario() {
+    return (
+    <Suspense>
+        <HorarioContent />
+    </Suspense>
     )
 }
