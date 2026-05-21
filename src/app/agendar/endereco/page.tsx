@@ -149,6 +149,41 @@ function EnderecoContent() {
                     </span>
                     </button>
                 </div>
+
+            {/* Observação */}
+            <div className="rounded-2xl p-4 mb-5"
+                    style={{ background: '#0d1f3c', border: '0.5px solid rgba(56,189,248,.15)' }}>
+                <label className="block text-xs font-medium uppercase tracking-wider mb-1.5"
+                        style={{ color: '#94a3b8' }}>Observação ao instrutor (opcional)</label>
+                <textarea value={form.observacao}
+                        onChange={e => set('observacao', e.target.value)}
+                        rows={3}
+                        placeholder="Ex: Portão azul, campainha 2, ligar antes de chegar..."
+                        className="w-full px-3 py-2 rounded-xl text-sm text-white outline-none resize-none"
+                        style={{ background: '#060e1e', border: '0.5px solid rgba(56,189,248,.2)' }} />
+            </div>
+
+            {/* Info */}
+            <div className="flex items-start gap-2 mb-5 text-xs"
+                    style={{ color: '#64748b' }}>
+                <Info size={13} className="mt-0.5 flex-shrink-0" />
+                <span>O endereço cadastrado será usado em todas as aulas do pacote. Você pode editar em cada aula individualmente.</span>
+            </div>
+
+            {/* Botão */}
+            <button
+                disabled={!completo}
+                onClick={() => router.push(`/agendar/pagamento?${queryBase}&${queryEnd}`)}
+                className="w-full py-3 rounded-xl text-sm font-bold transition-all"
+                style={{
+                background: completo ? '#38bdf8' : '#0d1f3c',
+                color:      completo ? '#060e1e' : '#94a3b8',
+                border:     completo ? 'none' : '0.5px solid rgba(56,189,248,.15)',
+                opacity:    completo ? 1 : 0.6,
+                cursor:     completo ? 'pointer' : 'not-allowed',
+                }}>
+                {completo ? 'Confirmar endereço →' : 'Preencha o endereço completo'}
+            </button>
         </section>
     </main>
     )
