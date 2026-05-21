@@ -62,18 +62,16 @@ async function main() {
     const moto  = veiculos.find(v => v.tipo === 'MOTO')!
 
     await prisma.pacote.createMany({
-    data: [
-
-        { instrutorId: instrutor.id, veiculoId: carro.id, nome: '2 aulas - Obrigatórias', quantidadeAulas: 2,  valorTotal: 200,  ativo: true },
-        { instrutorId: instrutor.id, veiculoId: carro.id, nome: '4 aulas - Pacote Essencial', quantidadeAulas: 4,  valorTotal: 392,  ativo: true },
-        { instrutorId: instrutor.id, veiculoId: carro.id, nome: '6 aulas - Pacote Experiente', quantidadeAulas: 6, valorTotal: 576,  ativo: true },
-        { instrutorId: instrutor.id, veiculoId: carro.id, nome: '8 aulas - Pacote Intermediário', quantidadeAulas: 8, valorTotal: 752,  ativo: true },
-
-        { instrutorId: instrutor.id, veiculoId: moto.id,  nome: '2 aulas - Obrigatórias', quantidadeAulas: 2,  valorTotal: 160,   ativo: true },
-        { instrutorId: instrutor.id, veiculoId: moto.id,  nome: '4 aulas - Pacote Essencial', quantidadeAulas: 4,  valorTotal: 312.60,  ativo: true },
-        { instrutorId: instrutor.id, veiculoId: moto.id,  nome: '6 aulas - Pacote Experiente', quantidadeAulas: 6, valorTotal: 460,  ativo: true },
-        { instrutorId: instrutor.id, veiculoId: moto.id,  nome: '8 aulas - Pacote Intermediário', quantidadeAulas: 8, valorTotal: 601.60,  ativo: true },
-    ],
+        data: [
+            // Pacotes de carro
+            { instrutorId: instrutor.id, veiculoId: carro.id, nome: 'Avulsa',          quantidadeAulas: 1,  valorTotal: 120,  ativo: true },
+            { instrutorId: instrutor.id, veiculoId: carro.id, nome: 'Pacote 6 aulas',  quantidadeAulas: 6,  valorTotal: 648,  ativo: true },
+            { instrutorId: instrutor.id, veiculoId: carro.id, nome: 'Pacote 12 aulas', quantidadeAulas: 12, valorTotal: 1188, ativo: true },
+            // Pacotes de moto
+            { instrutorId: instrutor.id, veiculoId: moto.id,  nome: 'Avulsa',          quantidadeAulas: 1,  valorTotal: 90,   ativo: true },
+            { instrutorId: instrutor.id, veiculoId: moto.id,  nome: 'Pacote 6 aulas',  quantidadeAulas: 6,  valorTotal: 486,  ativo: true },
+            { instrutorId: instrutor.id, veiculoId: moto.id,  nome: 'Pacote 12 aulas', quantidadeAulas: 12, valorTotal: 900,  ativo: true },
+        ],
     })
 
     console.log('✅ Seed concluído! Instrutor criado:', instrutor.nome)

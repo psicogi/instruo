@@ -6,9 +6,9 @@ import { Calendar, Car, Bike, MapPin, Package, CircleCheckBig } from 'lucide-rea
 import { formatarMoeda } from '@/lib/utils'
 
 const PACOTES: Record<string, { label: string; qtd: number; totalCarro: number; totalMoto: number }> = {
-    '1':  { label: 'Aula avulsa',     qtd: 1,  totalCarro: 120, totalMoto: 90  },
-    '5':  { label: 'Pacote 5 aulas',  qtd: 5,  totalCarro: 550, totalMoto: 415 },
-    '10': { label: 'Pacote 10 aulas', qtd: 10, totalCarro: 990, totalMoto: 765 },
+    '1':  { label: 'Aula avulsa',     qtd: 1,  totalCarro: 120,  totalMoto: 90  },
+    '6':  { label: 'Pacote 6 aulas',  qtd: 6,  totalCarro: 648,  totalMoto: 486 },
+    '12': { label: 'Pacote 12 aulas', qtd: 12, totalCarro: 1188, totalMoto: 900 },
 }
 
 function ConfirmacaoContent() {

@@ -6,15 +6,15 @@ import { ChevronLeft, QrCode, CreditCard, Barcode, Check } from 'lucide-react'
 import { formatarMoeda } from '@/lib/utils'
 
 const PACOTES: Record<string, { label: string; qtd: number; totalCarro: number; totalMoto: number }> = {
-    '1':  { label: 'Aula avulsa',     qtd: 1,  totalCarro: 120,  totalMoto: 90  },
-    '5':  { label: 'Pacote 5 aulas',  qtd: 5,  totalCarro: 550,  totalMoto: 415 },
-    '10': { label: 'Pacote 10 aulas', qtd: 10, totalCarro: 990,  totalMoto: 765 },
+    '1':  { label: 'Aula avulsa',      qtd: 1,  totalCarro: 120,  totalMoto: 90  },
+    '6':  { label: 'Pacote 6 aulas',   qtd: 6,  totalCarro: 648,  totalMoto: 486 },
+    '12': { label: 'Pacote 12 aulas',  qtd: 12, totalCarro: 1188, totalMoto: 900 },
 }
 
 const ECONOMIA: Record<string, { carro: number; moto: number }> = {
     '1':  { carro: 0,   moto: 0   },
-    '5':  { carro: 50,  moto: 35  },
-    '10': { carro: 210, moto: 135 },
+    '6':  { carro: 72,  moto: 54  },
+    '12': { carro: 252, moto: 180 },
 }
 
 type MetodoPag = 'pix' | 'cartao' | 'boleto'
@@ -71,10 +71,23 @@ const pagar = async () => {
         const veiculo      = instrutor.veiculos.find(
             (v: { tipo: string }) => v.tipo === (tipo === 'carro' ? 'CARRO' : 'MOTO')
         )
+
         const pacoteDB = instrutor.pacotes.find(
-            (p: { veiculoId: string; quantidadeAulas: number }) =>
-            p.veiculoId === veiculo?.id && p.quantidadeAulas === pk.qtd
+        (p: { veiculoId: string; quantidadeAulas: number }) => {
+            const qtdCorreta = p.quantidadeAulas === pk.qtd
+            const veiculoCorreto = p.veiculoId === veiculo?.id
+            console.log('🔍 Pacote candidato:', p, { qtdCorreta, veiculoCorreto })
+            return qtdCorreta && veiculoCorreto
+        }
         )
+
+        if (!pacoteDB) {
+        console.error('❌ Pacote não encontrado. Pacotes disponíveis:', instrutor.pacotes)
+        console.error('Buscando: veiculoId=', veiculo?.id, 'qtd=', pk.qtd)
+        alert('Erro: pacote não encontrado. Tente novamente.')
+        setLoading(false)
+        return
+        }
 
         const dataHora = new Date(
             Number(ano), Number(mes), Number(dia),
