@@ -63,6 +63,38 @@ function ConfirmacaoContent() {
             <p className="text-sm mb-8" style={{ color: '#94a3b8' }}>
                 Pagamento recebido. Você e o instrutor foram notificados por e-mail.
             </p>
+
+            {/* Card resumo */}
+            <div className="w-full rounded-2xl p-5 mb-6 text-left space-y-3"
+                style={{ background: '#0d1f3c', border: '0.5px solid rgba(56,189,248,.2)' }}>
+
+                {[
+                {
+                    icon: tipo === 'carro' ? Car : Bike,
+                    texto: `Wallif Guedes — ${tipo === 'carro' ? 'Instrutor Cat. B' : 'Instrutor Cat. A'}`,
+                },
+                {
+                    icon: Package,
+                    texto: `${pk.label} · ${formatarMoeda(total)} pago`,
+                },
+                {
+                    icon: Calendar,
+                    texto: `1ª aula: ${dataAula} · ${hora}`,
+                },
+                {
+                    icon: MapPin,
+                    texto: 'Instrutor vai buscar você no endereço cadastrado',
+                },
+                ].map((item, i) => {
+                    const Icon = item.icon
+                    return (
+                        <div key={i} className="flex items-start gap-3">
+                        <Icon size={16} className="mt-0.5 flex-shrink-0" style={{ color: '#38bdf8' }} />
+                        <span className="text-sm" style={{ color: '#cbd5e1' }}>{item.texto}</span>
+                        </div>
+                    )
+                })}
+            </div>
         </section>
     </main>
     )
