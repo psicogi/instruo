@@ -30,4 +30,48 @@ function ConfirmacaoContent() {
     ? new Date(Number(ano), Number(mes), Number(dia))
         .toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })
     : ''
+
+    useEffect(() => {
+    const t = setTimeout(() => setAnimado(true), 100)
+    return () => clearTimeout(t)
+    }, [])
+
+    return (
+    <main className="max-w-lg mx-auto min-h-screen flex flex-col">
+
+      {/* NAV */}
+        <nav className="flex items-center justify-center px-5 py-4"
+            style={{ background: '#0a1628', borderBottom: '0.5px solid rgba(56,189,248,.15)' }}>
+            <span className="text-xl font-bold" style={{ color: '#38bdf8' }}>instruo</span>
+        </nav>
+
+        <section className="px-5 py-8 flex flex-col items-center text-center flex-1">
+
+            {/* Ícone animado */}
+            <div className="w-20 h-20 rounded-full flex items-center justify-center mb-5 transition-all duration-500"
+                    style={{
+                        background: animado ? '#38bdf8' : '#0d1f3c',
+                        transform: animado ? 'scale(1)' : 'scale(0.8)',
+                        border: '3px solid rgba(56,189,248,.3)',
+                    }}>
+                <CircleCheckBig size={36} style={{ color: animado ? '#060e1e' : '#38bdf8' }} />
+            </div>
+
+            <h2 className="text-2xl font-bold text-white mb-2">
+                {pk.qtd === 1 ? 'Aula confirmada!' : 'Pacote confirmado!'}
+            </h2>
+            <p className="text-sm mb-8" style={{ color: '#94a3b8' }}>
+                Pagamento recebido. Você e o instrutor foram notificados por e-mail.
+            </p>
+        </section>
+    </main>
+    )
+}
+
+export default function AgendarConfirmacao() {
+    return (
+        <Suspense>
+            <ConfirmacaoContent />
+        </Suspense>
+    )
 }
