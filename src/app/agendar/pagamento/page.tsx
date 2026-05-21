@@ -147,6 +147,41 @@ function PagamentoContent() {
                     )
                 })}
             </div>
+
+            {/* PIX */}
+            {metodo === 'pix' && (
+            <div className="rounded-2xl p-4 mb-5 flex items-center gap-4"
+                style={{ background: '#060e1e', border: '0.5px solid rgba(56,189,248,.15)' }}>
+                {/* QR Code SVG simplificado */}
+                <div className="w-16 h-16 rounded-xl flex-shrink-0 flex items-center justify-center"
+                    style={{ background: '#fff' }}>
+                    <svg width="48" height="48" viewBox="0 0 44 44" fill="none">
+                        <rect x="2"  y="2"  width="14" height="14" rx="2" fill="#111"/>
+                        <rect x="5"  y="5"  width="8"  height="8"  fill="#fff"/>
+                        <rect x="28" y="2"  width="14" height="14" rx="2" fill="#111"/>
+                        <rect x="31" y="5"  width="8"  height="8"  fill="#fff"/>
+                        <rect x="2"  y="28" width="14" height="14" rx="2" fill="#111"/>
+                        <rect x="5"  y="31" width="8"  height="8"  fill="#fff"/>
+                        <rect x="18" y="18" width="4" height="4" fill="#111"/>
+                        <rect x="26" y="18" width="4" height="4" fill="#111"/>
+                        <rect x="34" y="18" width="4" height="4" fill="#111"/>
+                        <rect x="18" y="26" width="4" height="4" fill="#111"/>
+                        <rect x="26" y="26" width="4" height="4" fill="#111"/>
+                        <rect x="18" y="34" width="4" height="4" fill="#111"/>
+                        <rect x="34" y="34" width="4" height="4" fill="#111"/>
+                    </svg>
+                </div>
+                <div>
+                    <p className="text-xs mb-1" style={{ color: '#64748b' }}>Chave PIX do instrutor</p>
+                    <p className="text-sm font-medium" style={{ color: '#38bdf8' }}>
+                        wallif@instruo.com
+                    </p>
+                    <p className="text-xs mt-1" style={{ color: '#64748b' }}>
+                        Pagamento direto ao instrutor
+                    </p>
+                </div>
+            </div>
+            )}
         </section>
     </main>
     )
