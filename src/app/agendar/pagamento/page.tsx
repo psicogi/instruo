@@ -203,6 +203,15 @@ function PagamentoContent() {
                     </div>
                 </div>
             )}
+
+            {/* Boleto */}
+            {metodo === 'boleto' && (
+                <div className="rounded-2xl p-4 mb-5 text-sm"
+                    style={{ background: '#0d1f3c', border: '0.5px solid rgba(56,189,248,.15)', color: '#94a3b8' }}>
+                    O boleto será gerado após a confirmação e enviado para o seu e-mail.
+                    O prazo de compensação é de até 3 dias úteis.
+                </div>
+            )}
         </section>
     </main>
     )
