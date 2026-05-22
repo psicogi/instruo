@@ -129,6 +129,24 @@ export default async function Painel() {
                             <div className="text-center min-w-[44px]">
                             <div className="text-base font-bold text-white">{hora}</div>
                             </div>
+
+                            {/* Linha */}
+                            <div className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                                style={{ background: '#38bdf8' }} />
+
+                            {/* Cliente */}
+                            <div className="flex items-center gap-2 flex-1">
+                                <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0"
+                                    style={{ background: '#38bdf8', color: '#060e1e' }}>
+                                    {iniciais}
+                                </div>
+                                <div>
+                                    <div className="text-sm font-medium text-white">{ag.cliente.nome}</div>
+                                    <div className="text-xs" style={{ color: '#94a3b8' }}>
+                                        {ag.cliente.telefone ?? ag.cliente.email}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     )
