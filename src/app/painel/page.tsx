@@ -99,6 +99,43 @@ export default async function Painel() {
                 </div>
             ))}
         </div>
+
+      {/* AGENDA DO DIA */}
+        <div className="px-5 pb-6">
+            <p className="text-xs font-medium uppercase tracking-widest mb-4"
+                style={{ color: '#94a3b8' }}>
+                Agenda de hoje
+            </p>
+
+            {agendamentosHoje.length === 0 ? (
+                <div className="rounded-2xl p-6 text-center"
+                    style={{ background: '#0d1f3c', border: '0.5px solid rgba(56,189,248,.1)' }}>
+                <Clock size={32} className="mx-auto mb-3" style={{ color: '#334155' }} />
+                <p className="text-sm" style={{ color: '#64748b' }}>Nenhuma aula agendada para hoje.</p>
+                </div>
+            ) : (
+            <div className="space-y-3">
+                {agendamentosHoje.map(ag => {
+                const hora  = ag.dataHora.toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' })
+                const st    = statusLabel[ag.status] ?? statusLabel.PENDENTE
+                const iniciais = ag.cliente.nome.split(' ').map(n => n[0]).slice(0,2).join('')
+
+                return (
+                    <div key={ag.id} className="rounded-2xl p-4"
+                        style={{ background: '#0d1f3c', border: '0.5px solid rgba(56,189,248,.15)' }}>
+                        <div className="flex items-center gap-3 mb-3">
+
+                            {/* Hora */}
+                            <div className="text-center min-w-[44px]">
+                            <div className="text-base font-bold text-white">{hora}</div>
+                            </div>
+                        </div>
+                    </div>
+                    )
+                })}
+            </div>
+        )}
+        </div>
     </main>
     )
 }
