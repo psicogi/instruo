@@ -147,6 +147,34 @@ export default async function Painel() {
                                     </div>
                                 </div>
                             </div>
+
+                            {/* Status */}
+                            <span className="text-xs px-2 py-1 rounded-full font-medium"
+                                style={{ background: st.bg, color: st.cor }}>
+                                {st.label}
+                            </span>
+                        </div>
+
+                        {/* Detalhes */}
+                        <div className="space-y-1.5 pl-14">
+                            <div className="flex items-center gap-2 text-xs" style={{ color: '#94a3b8' }}>
+                                {ag.veiculo.tipo === 'CARRO'
+                                    ? <Car size={12} />
+                                    : <Bike size={12} />}
+                                <span>
+                                    {ag.veiculo.tipo === 'CARRO' ? 'Carro' : 'Moto'} — Cat. {ag.veiculo.categoriaCnh} · {ag.veiculo.modelo}
+                                </span>
+                            </div>
+                            <div className="flex items-center gap-2 text-xs" style={{ color: '#94a3b8' }}>
+                                <MapPin size={12} />
+                                <span>{ag.endereco.rua}, {ag.endereco.numero} · {ag.endereco.bairro}</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-xs" style={{ color: '#94a3b8' }}>
+                                <Package size={12} />
+                                <span>
+                                    {ag.compra.pacote.nome} · Aula {ag.numeroAula}/{ag.compra.pacote.quantidadeAulas}
+                                </span>
+                            </div>
                         </div>
                     </div>
                     )
