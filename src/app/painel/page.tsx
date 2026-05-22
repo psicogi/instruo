@@ -84,6 +84,21 @@ export default async function Painel() {
                 {' · '}{agendamentosHoje.length} aula{agendamentosHoje.length !== 1 ? 's' : ''} hoje
             </p>
         </div>
+
+      {/* STATS */}
+        <div className="grid grid-cols-3 gap-3 px-5 py-4">
+            {[
+                { label: 'Esta semana', valor: formatarMoeda(totalSemana._sum.valorPago ?? 0) },
+                { label: 'Aulas no mês', valor: String(totalAgendamentosMes) },
+                { label: 'Avaliação', valor: '4.9 ⭐' },
+                ].map(s => (
+                <div key={s.label} className="rounded-xl p-3 text-center"
+                    style={{ background: '#0d1f3c', border: '0.5px solid rgba(56,189,248,.15)' }}>
+                <div className="text-lg font-bold mb-0.5" style={{ color: '#38bdf8' }}>{s.valor}</div>
+                <div className="text-xs" style={{ color: '#94a3b8' }}>{s.label}</div>
+                </div>
+            ))}
+        </div>
     </main>
     )
 }
