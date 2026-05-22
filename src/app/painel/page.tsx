@@ -72,6 +72,18 @@ export default async function Painel() {
                 Painel do instrutor
             </span>
         </nav>
+
+      {/* HEADER */}
+        <div className="px-5 py-5"
+            style={{ background: '#0a1628', borderBottom: '0.5px solid rgba(56,189,248,.1)' }}>
+            <h1 className="text-xl font-bold text-white mb-0.5">
+                Olá, {instrutor.nome.split(' ')[0]} 👋
+            </h1>
+            <p className="text-sm" style={{ color: '#94a3b8' }}>
+                {hoje.toLocaleDateString('pt-BR', { weekday:'long', day:'numeric', month:'long' })}
+                {' · '}{agendamentosHoje.length} aula{agendamentosHoje.length !== 1 ? 's' : ''} hoje
+            </p>
+        </div>
     </main>
     )
 }
