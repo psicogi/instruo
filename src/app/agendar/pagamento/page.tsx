@@ -34,11 +34,15 @@ function PagamentoContent() {
     const bairro  = params.get('bairro')  ?? ''
     const cidade  = params.get('cidade')  ?? ''
 
-const [metodo, setMetodo]     = useState<MetodoPag>('pix')
-const [loading, setLoading]   = useState(false)
-const [nome, setNome]         = useState('')
-const [email, setEmail]       = useState('')
-const [telefone, setTelefone] = useState('')
+const [metodo, setMetodo]       = useState<MetodoPag>('pix')
+const [loading, setLoading]     = useState(false)
+const [nome, setNome]           = useState('')
+const [email, setEmail]         = useState('')
+const [telefone, setTelefone]   = useState('')
+const [pixQr, setPixQr]         = useState<string | null>(null)
+const [pixCopia, setPixCopia]   = useState<string | null>(null)
+const [copiado, setCopiado]     = useState(false)
+const [compraId, setCompraId]   = useState<string | null>(null)
 
 const pk    = PACOTES[pacote] ?? PACOTES['1']
 const total = tipo === 'carro' ? pk.totalCarro : pk.totalMoto
@@ -54,74 +58,98 @@ const endFormatado = [rua, numero, bairro, cidade].filter(Boolean).join(', ')
 
 const pagar = async () => {
     if (!nome || !email) {
-        alert('Preencha seu nome e e-mail para continuar.')
-        return
+    alert('Preencha seu nome e e-mail para continuar.')
+    return
     }
     setLoading(true)
     try {
-        const resCliente = await fetch('/api/clientes', {
-            method:  'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body:    JSON.stringify({ nome, email, telefone }),
-        })
-        const cliente = await resCliente.json()
+    const resCliente = await fetch('/api/clientes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nome, email, telefone }),
+    })
+    const cliente = await resCliente.json()
 
-        const resInstrutor = await fetch('/api/instrutor')
-        const instrutor    = await resInstrutor.json()
-        const veiculo      = instrutor.veiculos.find(
-            (v: { tipo: string }) => v.tipo === (tipo === 'carro' ? 'CARRO' : 'MOTO')
-        )
+    const resInstrutor = await fetch('/api/instrutor')
+    const instrutor    = await resInstrutor.json()
+    const veiculo      = instrutor.veiculos.find(
+        (v: { tipo: string }) => v.tipo === (tipo === 'carro' ? 'CARRO' : 'MOTO')
+    )
+    const pacoteDB = instrutor.pacotes.find(
+        (p: { veiculoId: string; quantidadeAulas: number }) =>
+        p.veiculoId === veiculo?.id && p.quantidadeAulas === pk.qtd
+    )
 
-        const pacoteDB = instrutor.pacotes.find(
-        (p: { veiculoId: string; quantidadeAulas: number }) => {
-            const qtdCorreta = p.quantidadeAulas === pk.qtd
-            const veiculoCorreto = p.veiculoId === veiculo?.id
-            console.log('🔍 Pacote candidato:', p, { qtdCorreta, veiculoCorreto })
-            return qtdCorreta && veiculoCorreto
-        }
-        )
-
-        if (!pacoteDB) {
-        console.error('❌ Pacote não encontrado. Pacotes disponíveis:', instrutor.pacotes)
-        console.error('Buscando: veiculoId=', veiculo?.id, 'qtd=', pk.qtd)
-        alert('Erro: pacote não encontrado. Tente novamente.')
+    if (!pacoteDB) {
+        alert('Pacote não encontrado. Tente novamente.')
         setLoading(false)
         return
-        }
+    }
 
-        const dataHora = new Date(
-            Number(ano), Number(mes), Number(dia),
-            Number(hora.split(':')[0]), Number(hora.split(':')[1])
-        ).toISOString()
+    const dataHora = new Date(
+        Number(ano), Number(mes), Number(dia),
+        Number(hora.split(':')[0]), Number(hora.split(':')[1])
+    ).toISOString()
 
-        await fetch('/api/agendamentos', {
-            method:  'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body:    JSON.stringify({
-                clienteId:   cliente.id,
-                pacoteId:    pacoteDB?.id,
-                veiculoId:   veiculo?.id,
-                instrutorId: instrutor.id,
-                dataHora,
-                rua:         params.get('rua')          ?? '',
-                numero:      params.get('numero')        ?? '',
-                complemento: params.get('complemento')   ?? '',
-                bairro:      params.get('bairro')        ?? '',
-                cidade:      params.get('cidade')        ?? '',
-                cep:         params.get('cep')           ?? '',
-                retorno:     params.get('retorno') === 'true',
-                observacao:  params.get('obs')           ?? '',
-            }),
+    const resAg = await fetch('/api/agendamentos', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+        clienteId:   cliente.id,
+        pacoteId:    pacoteDB.id,
+        veiculoId:   veiculo.id,
+        instrutorId: instrutor.id,
+        dataHora,
+        rua:         params.get('rua')          ?? '',
+        numero:      params.get('numero')        ?? '',
+        complemento: params.get('complemento')   ?? '',
+        bairro:      params.get('bairro')        ?? '',
+        cidade:      params.get('cidade')        ?? '',
+        cep:         params.get('cep')           ?? '',
+        retorno:     params.get('retorno') === 'true',
+        observacao:  params.get('obs')           ?? '',
+        }),
     })
+    const { compra } = await resAg.json()
+    setCompraId(compra.id)
 
-    router.push(
-        `/agendar/confirmacao?tipo=${tipo}&pacote=${pacote}&dia=${dia}&mes=${mes}&ano=${ano}&hora=${hora}`
-    )
+    if (metodo === 'pix') {
+        const resPix = await fetch('/api/pagamentos/pix', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                valor:    total,
+                email:    cliente.email,
+                nome:     cliente.nome,
+                compraId: compra.id,
+            }),
+        })
+        const pix = await resPix.json()
+
+        if (pix.qr_code_base64) {
+            setPixQr(pix.qr_code_base64)
+            setPixCopia(pix.qr_code)
+        } else {
+        throw new Error('QR code não gerado')
+        }
+    } else {
+        router.push(
+            `/agendar/confirmacao?tipo=${tipo}&pacote=${pacote}&dia=${dia}&mes=${mes}&ano=${ano}&hora=${hora}`
+        )
+    }
     } catch (err) {
-    console.error(err)
-    alert('Erro ao processar. Tente novamente.')
+        console.error(err)
+        alert('Erro ao processar. Tente novamente.')
     } finally {
         setLoading(false)
+    }
+}
+
+const copiarPix = () => {
+    if (pixCopia) {
+        navigator.clipboard.writeText(pixCopia)
+        setCopiado(true)
+        setTimeout(() => setCopiado(false), 3000)
     }
 }
 
