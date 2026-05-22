@@ -62,6 +62,16 @@ export default async function Painel() {
 
     return (
     <main className="max-w-lg mx-auto min-h-screen">
+
+      {/* NAV */}
+        <nav className="flex items-center justify-between px-5 py-4"
+            style={{ background: '#0a1628', borderBottom: '0.5px solid rgba(56,189,248,.15)' }}>
+            <span className="text-xl font-bold" style={{ color: '#38bdf8' }}>instruo</span>
+            <span className="text-xs px-3 py-1 rounded-full"
+                    style={{ background: 'rgba(56,189,248,.1)', color: '#38bdf8' }}>
+                Painel do instrutor
+            </span>
+        </nav>
     </main>
     )
 }
