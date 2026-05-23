@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client'
+import bcrypt from 'bcryptjs'
 
 const prisma = new PrismaClient()
 
@@ -72,6 +73,29 @@ async function main() {
             { instrutorId: instrutor.id, veiculoId: moto.id,  nome: 'Pacote 6 aulas',  quantidadeAulas: 6,  valorTotal: 486,  ativo: true },
             { instrutorId: instrutor.id, veiculoId: moto.id,  nome: 'Pacote 12 aulas', quantidadeAulas: 12, valorTotal: 900,  ativo: true },
         ],
+    })
+
+    const senhaHash = await bcrypt.hash('instruo123', 10)
+    await prisma.contaInstrutor.upsert({
+        where:  { instrutorId: instrutor.id },
+        update: {},
+        create: {
+        email:       instrutor.email,
+        senha:       senhaHash,
+        instrutorId: instrutor.id,
+        },
+    })
+
+    await prisma.disponibilidade.deleteMany({ where: { instrutorId: instrutor.id } })
+    await prisma.disponibilidade.createMany({
+        data: [1,2,3,4,5,6].map(dia => ({
+        instrutorId: instrutor.id,
+        diaSemana:   dia,
+        horaInicio:  '07:00',
+        horaFim:     '18:00',
+        intervalo:   50,
+        ativo:       true,
+        })),
     })
 
     console.log('✅ Seed concluído! Instrutor criado:', instrutor.nome)
