@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
                 last_name:  nome.split(' ').slice(1).join(' ') || 'Cliente',
             },
             external_reference: compraId,
-            notification_url: `${process.env.NEXTAUTH_URL}/api/pagamentos/webhook`,
+            // notification_url: `${process.env.NEXTAUTH_URL}/api/pagamentos/webhook`,
         },
     })
 
