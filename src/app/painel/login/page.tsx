@@ -84,6 +84,28 @@ export default function Login() {
                 </div>
             </div>
 
+            {/* Erro */}
+            {erro && (
+                <p className="text-xs text-center py-2 rounded-lg"
+                    style={{ background: 'rgba(239,68,68,.1)', color: '#f87171' }}>
+                {erro}
+                </p>
+            )}
+
+            {/* Botão */}
+            <button onClick={entrar} disabled={loading}
+                    className="w-full py-3 rounded-xl text-sm font-bold transition-all"
+                    style={{
+                        background: loading ? '#0d1f3c' : '#38bdf8',
+                        color:      loading ? '#94a3b8' : '#060e1e',
+                        cursor:     loading ? 'not-allowed' : 'pointer',
+                    }}>
+                {loading ? 'Entrando...' : 'Entrar →'}
+            </button>
+
+            <p className="text-xs text-center" style={{ color: '#475569' }}>
+                Credenciais de teste: wallif@instruo.com / instruo123
+            </p>
         </div>
     </main>
     )
