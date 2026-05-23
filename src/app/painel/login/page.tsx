@@ -62,6 +62,28 @@ export default function Login() {
                 </div>
             </div>
 
+            {/* Senha */}
+            <div>
+                <label className="block text-xs font-medium uppercase tracking-wider mb-1.5"
+                        style={{ color: '#94a3b8' }}>Senha</label>
+                <div className="relative">
+                    <Lock size={15} className="absolute left-3 top-1/2 -translate-y-1/2"
+                        style={{ color: '#475569' }} />
+                    <input value={senha}
+                        onChange={e => setSenha(e.target.value)}
+                        onKeyDown={e => e.key === 'Enter' && entrar()}
+                        type={mostrar ? 'text' : 'password'}
+                        placeholder="••••••••"
+                        className="w-full pl-9 pr-10 py-2.5 rounded-xl text-sm text-white outline-none"
+                        style={{ background: '#060e1e', border: '0.5px solid rgba(56,189,248,.2)' }} />
+                    <button onClick={() => setMostrar(m => !m)}
+                        className="absolute right-3 top-1/2 -translate-y-1/2"
+                        style={{ color: '#475569' }}>
+                    {mostrar ? <EyeOff size={15} /> : <Eye size={15} />}
+                    </button>
+                </div>
+            </div>
+
         </div>
     </main>
     )
