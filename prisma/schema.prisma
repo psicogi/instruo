@@ -26,6 +26,15 @@ model Instrutor {
     bloqueios    Bloqueio[]
 }
 
+model ContaInstrutor {
+    id        String   @id @default(cuid())
+    email     String   @unique
+    senha     String
+    instrutorId String @unique
+    instrutor Instrutor @relation(fields: [instrutorId], references: [id])
+    createdAt DateTime @default(now())
+}
+
 model BairroInstrutor {
     id          String    @id @default(cuid())
     instrutorId String
