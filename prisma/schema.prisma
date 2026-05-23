@@ -24,6 +24,20 @@ model Instrutor {
     pacotes      Pacote[]
     agendamentos Agendamento[]
     bloqueios    Bloqueio[]
+    conta           ContaInstrutor?
+    disponibilidade Disponibilidade[]
+}
+
+model Disponibilidade {
+    id          String   @id @default(cuid())
+    instrutorId String
+    diaSemana   Int      // 0=Dom, 1=Seg, ..., 6=Sab
+    horaInicio  String   // "07:00"
+    horaFim     String   // "18:00"
+    intervalo   Int      @default(50) // minutos por aula
+    ativo       Boolean  @default(true)
+
+    instrutor   Instrutor @relation(fields: [instrutorId], references: [id])
 }
 
 model ContaInstrutor {
