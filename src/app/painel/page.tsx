@@ -1,8 +1,13 @@
 import { prisma } from '@/lib/prisma'
 import { formatarMoeda } from '@/lib/utils'
 import { Car, Bike, MapPin, Package, Clock } from 'lucide-react'
+import { getServerSession } from 'next-auth'
+import { redirect } from 'next/navigation'
 
 export default async function Painel() {
+    const session = await getServerSession()
+    if (!session) redirect('/painel/login')
+
     const instrutor = await prisma.instrutor.findFirst()
     if (!instrutor) return null
 
