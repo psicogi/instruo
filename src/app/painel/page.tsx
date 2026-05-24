@@ -1,6 +1,6 @@
 import { prisma } from '@/lib/prisma'
 import { formatarMoeda } from '@/lib/utils'
-import { Car, Bike, MapPin, Package, Clock } from 'lucide-react'
+import { Car, Bike, MapPin, Package, Clock, LogOut } from 'lucide-react'
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
 
@@ -69,13 +69,26 @@ export default async function Painel() {
     <main className="max-w-lg mx-auto min-h-screen">
 
       {/* NAV */}
+{/*/* NAV */}
         <nav className="flex items-center justify-between px-5 py-4"
-            style={{ background: '#0a1628', borderBottom: '0.5px solid rgba(56,189,248,.15)' }}>
+        style={{ background: '#0a1628', borderBottom: '0.5px solid rgba(56,189,248,.15)' }}>
+            {/* Lado Esquerdo: Logo */}
             <span className="text-xl font-bold" style={{ color: '#38bdf8' }}>instruo</span>
-            <span className="text-xs px-3 py-1 rounded-full"
+            {/* Lado Direito: Badge + Botão Sair agrupados */}
+            <div className="flex items-center gap-3">
+                <span className="text-xs px-3 py-1 rounded-full"
                     style={{ background: 'rgba(56,189,248,.1)', color: '#38bdf8' }}>
-                Painel do instrutor
-            </span>
+                    Painel do instrutor
+                </span>
+
+                <form action="/api/auth/signout" method="POST">
+                    <button type="submit"
+                        className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full transition-all hover:opacity-80 active:scale-95"
+                        style={{ background: 'rgba(239,68,68,.1)', color: '#f87171' }}>
+                        <LogOut size={12} /> Sair
+                    </button>
+                </form>
+            </div>
         </nav>
 
       {/* HEADER */}
