@@ -36,7 +36,7 @@ function HorarioContent() {
 
   // Busca horários ocupados quando mês/ano mudam
     useEffect(() => {
-    if (!instrutorId) return
+        if (!instrutorId) return
         setCarregando(true)
         fetch(`/api/horarios-ocupados?instrutorId=${instrutorId}&mes=${mes}&ano=${ano}`)
             .then(r => r.json())
@@ -61,15 +61,8 @@ function HorarioContent() {
     const isHoje   = (d: number) => d === hoje.getDate() && mes === hoje.getMonth() && ano === hoje.getFullYear()
     const isPassed = (d: number) => new Date(ano, mes, d) < new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate())
 
-    const diasComOcupacao = Array.from(new Set(ocupados.map(o => o.dia)))
-
-    const diasCheios = new Set<number>(
-        diasComOcupacao.filter(dia =>
-        HORARIOS.every(hora =>
-        ocupados.some(o => o.dia === dia && o.hora === hora)
-        )
-        )
-    )
+// Dias com algum horário ocupado
+    const diasComOcupado = new Set(ocupados.map(o => o.dia))
 
     const horariosOcupados = diaSel
     ? ocupados.filter(o => o.dia === diaSel).map(o => o.hora)
