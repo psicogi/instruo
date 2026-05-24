@@ -5,15 +5,13 @@ const prisma = new PrismaClient()
 
 async function main() {
 
-    await prisma.agendamento.deleteMany()
-    await prisma.compra.deleteMany()
-    await prisma.pacote.deleteMany()
-    await prisma.veiculo.deleteMany()
-    await prisma.bairroInstrutor.deleteMany()
-    await prisma.endereco.deleteMany()
-    await prisma.cliente.deleteMany()
-    await prisma.bloqueio.deleteMany()
-    await prisma.instrutor.deleteMany()
+    await prisma.$executeRawUnsafe(`
+        TRUNCATE TABLE 
+        "Agendamento", "Compra", "Cliente", "Endereco", 
+        "Bloqueio", "Disponibilidade", "ContaInstrutor", 
+        "BairroInstrutor", "Veiculo", "Pacote", "Instrutor" 
+        CASCADE;
+    `);
 
     const instrutor = await prisma.instrutor.create({
     data: {
