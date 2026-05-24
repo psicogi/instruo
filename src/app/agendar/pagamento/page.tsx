@@ -61,6 +61,11 @@ const pagar = async () => {
     alert('Preencha seu nome e e-mail para continuar.')
     return
     }
+    const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+    if (!emailValido) {
+        alert('Digite um e-mail válido. Ex: seunome@gmail.com')
+        return
+    }
     setLoading(true)
     try {
     const resCliente = await fetch('/api/clientes', {
