@@ -116,7 +116,7 @@ function ConfirmacaoContent() {
                         onClick={() => router.push('/minhas-aulas')}
                         className="w-full py-3 rounded-xl text-sm font-bold"
                         style={{ background: '#38bdf8', color: '#060e1e' }}>
-                        Agendar próximas aulas →
+                        Ver minhas aulas →
                     </button>
                 )}
                 <button
