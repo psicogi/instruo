@@ -14,13 +14,14 @@ export async function GET(req: NextRequest) {
     const inicio = new Date(Number(ano), Number(mes), 1)
     const fim    = new Date(Number(ano), Number(mes) + 1, 0, 23, 59)
 
-    const agendamentos = await prisma.agendamento.findMany({
-        where: {
-            instrutorId,
-            dataHora: { gte: inicio, lte: fim },
-            status:   { in: ['PENDENTE', 'CONFIRMADO'] },
-        },
-        select: { dataHora: true },
+    try {
+        const agendamentos = await prisma.agendamento.findMany({
+            where: {
+                instrutorId,
+                dataHora: { gte: inicio, lte: fim },
+                status:   { in: ['PENDENTE', 'CONFIRMADO'] },
+            },
+            select: { dataHora: true },
     })
 
     const ocupados = agendamentos.map(a => ({
@@ -29,4 +30,8 @@ export async function GET(req: NextRequest) {
     }))
 
     return NextResponse.json(ocupados)
+    } catch (err) {
+        console.error('Erro ao buscar horários:', err)
+        return NextResponse.json({ erro: 'Erro interno' }, { status: 500 })
+    }
 }
