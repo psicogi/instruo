@@ -71,8 +71,8 @@ const dataAula = dia
 const endFormatado = [rua, numero, bairro, cidade].filter(Boolean).join(', ')
 
 const pagar = async () => {
-    if (!nome || !email) {
-    alert('Preencha seu nome e e-mail para continuar.')
+    if (!nome || !email || !telefone) {
+    alert('Preencha nome, e-mail e WhatsApp para continuar.')
     return
     }
     const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
@@ -224,9 +224,9 @@ const copiarPix = () => {
                         className="w-full px-3 py-2 rounded-xl text-sm text-white outline-none"
                         style={{ background: '#060e1e', border: `0.5px solid ${email ? '#38bdf8' : 'rgba(56,189,248,.2)'}` }} />
                 <input value={telefone} onChange={e => setTelefone(e.target.value)}
-                        placeholder="WhatsApp (opcional)"
+                        placeholder="WhatsApp *"
                         className="w-full px-3 py-2 rounded-xl text-sm text-white outline-none"
-                        style={{ background: '#060e1e', border: '0.5px solid rgba(56,189,248,.2)' }} />
+                        style={{ background: '#060e1e', border: `0.5px solid ${telefone ? '#38bdf8' : 'rgba(56,189,248,.2)'}` }} />
             </div>
 
             {/* Resumo */}
