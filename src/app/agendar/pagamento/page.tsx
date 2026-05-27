@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useState, Suspense } from 'react'
+import { useState, useEffect, useRef, Suspense } from 'react'
 import { ChevronLeft, QrCode, CreditCard, Barcode, Check } from 'lucide-react'
 import { formatarMoeda } from '@/lib/utils'
 
@@ -43,6 +43,20 @@ const [pixQr, setPixQr]         = useState<string | null>(null)
 const [pixCopia, setPixCopia]   = useState<string | null>(null)
 const [copiado, setCopiado]     = useState(false)
 const [compraId, setCompraId]   = useState<string | null>(null)
+const pagamentoConcluidoRef   = useRef(false)
+
+useEffect(() => {
+    return () => {
+    if (compraId && !pagamentoConcluidoRef.current) {
+        fetch('/api/agendamentos/cancelar-compra', {
+            method:    'POST',
+            headers:   { 'Content-Type': 'application/json' },
+            body:      JSON.stringify({ compraId }),
+            keepalive: true,
+        })
+        }
+    }
+}, [compraId])
 
 const pk    = PACOTES[pacote] ?? PACOTES['1']
 const total = tipo === 'carro' ? pk.totalCarro : pk.totalMoto
@@ -150,6 +164,7 @@ const pagar = async () => {
         throw new Error('QR code não gerado')
         }
     } else {
+        pagamentoConcluidoRef.current = true
         router.push(
             `/agendar/confirmacao?tipo=${tipo}&pacote=${pacote}&dia=${dia}&mes=${mes}&ano=${ano}&hora=${hora}`
         )
@@ -324,9 +339,12 @@ const copiarPix = () => {
                 <p className="text-xs text-center" style={{ color: '#64748b' }}>
                 Após o pagamento, você receberá a confirmação por e-mail automaticamente.
                 </p>
-                <button onClick={() => router.push(
+                <button onClick={() => {
+                            pagamentoConcluidoRef.current = true
+                            router.push(
                             `/agendar/confirmacao?tipo=${tipo}&pacote=${pacote}&dia=${dia}&mes=${mes}&ano=${ano}&hora=${hora}`
-                        )}
+                            )
+                        }}
                         className="text-xs underline"
                         style={{ color: '#475569' }}>
                 Já paguei, ir para confirmação →
